@@ -2,3 +2,4 @@ numpy
 brian2
 matplotlib
 networkx
+jupyter_nbextensions_configurator
