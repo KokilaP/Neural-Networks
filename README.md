@@ -27,3 +27,8 @@ The code can only run on Python 2 because Brian2 is not supported or working cor
 4. Open up the project code on Jupyter Notebook and go to **Kernel --> Change Kernel --> Python 2** before running the code
 
 Resource: [Installing the IPython kernel](https://ipython.readthedocs.io/en/latest/install/kernel_install.html#installing-the-ipython-kernel)
+
+## PySpike Installation
+
+PySpike requires the MSVC (Microsoft Visual C) compiler version 12 and above to install its cython package. Python 2 however only works with compiler version 9. The installation can be done by editing the **setup.py** installation file so that cython is not installed. For more details refer to the following forum: [Installation failure](https://github.com/mariomulansky/PySpike/issues/22) 
+
