@@ -32,3 +32,19 @@ Resource: [Installing the IPython kernel](https://ipython.readthedocs.io/en/late
 
 PySpike requires the MSVC (Microsoft Visual C) compiler version 12 and above to install its cython package. Python 2 however only works with compiler version 9. The installation can be done by editing the **setup.py** installation file so that cython is not installed. For more details refer to the following forum: [Installation failure](https://github.com/mariomulansky/PySpike/issues/22) 
 
+Here's one way to install PySpike:
+
+1. If it's not already there, clone/download the PySpike GitHub repository into the Neural-Networks folder: [PySpike GitHub](https://github.com/mariomulansky/PySpike)
+2. Edit **setup.py** in the **PySpike** folder so that cython will not be installed:
+
+      <img src ="https://github.com/KokilaP/Neural-Networks/blob/master/images/pyspike.JPG" title="Edited portion of setup.py" height="187" width="371">
+      
+3. Install PySpike by running the new **setup.py**:
+    - If using Anaconda:
+       - Open up Anaconda prompt and activate the appropriate environment (as shown in **Compatibility Issues**)
+       - cd into the **PySpike** folder where **setup.py** is
+       - Type in: 
+         ```
+         python setup.py build_ext --inplace
+         ```
+For more installation methods: [PySpike](http://mariomulansky.github.io/PySpike/)
