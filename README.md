@@ -1,8 +1,8 @@
 # Neural-Networks
 
-## Compatibility Issues
+## Compatibility Issues with Python 3
 
-The code can only run on Python 2 because Brian2 is not supported or working correctly on Python 3 at the moment. Please refer to the steps below on how to modify Jupyter notebook environment to Python 2 using Anaconda: 
+The code can only run on Python 2 because Brian2 is not supported or working correctly on Python 3 at the moment. Please refer to the steps below on how to modify Jupyter notebook environment to Python 2 using Anaconda if you already have Python 3 installed: 
 
 1. Open up Anaconda command prompt
 
