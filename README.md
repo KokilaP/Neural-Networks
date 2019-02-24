@@ -56,5 +56,10 @@ For more installation methods: [PySpike](http://mariomulansky.github.io/PySpike/
 
 ## Useful GitHub links
 
-* Basic reference to use GitHub commandline: [https://git-scm.com/docs](https://git-scm.com/docs)
+* Basic reference to use command prompt for GitHub: [https://git-scm.com/docs](https://git-scm.com/docs)
+  * Useful command to view status of files or possible conflicts
+    ```
+    ...\Neural-Networks>git status
+    ```
 * Reference to resolve common conflicts with GitHub files: [http://allendowney.github.io/amgit/conflict.html](http://allendowney.github.io/amgit/conflict.html)
+* If a Jupyter Notebook file isn't rendering/displaying properly on GitHub use Notebook Viewer: [https://nbviewer.jupyter.org/](https://nbviewer.jupyter.org/)
