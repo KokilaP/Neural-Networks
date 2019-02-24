@@ -1,5 +1,10 @@
 # Neural-Networks
 
+## Contents
+1. [Compatibility Issues with Python 3](README.md#compatibility-issues-with-python-3)
+2. [PySpike Installation](README.md#pyspike-installation)
+3. [Useful GitHub links](README.md#useful-github-links)
+
 ## Compatibility Issues with Python 3
 
 The code can only run on Python 2 because Brian2 is not supported or working correctly on Python 3 at the moment. Please refer to the steps below on how to modify Jupyter notebook environment to Python 2 using Anaconda if you already have Python 3 installed: 
@@ -48,3 +53,8 @@ Here's one way to install PySpike:
          python setup.py build_ext --inplace
          ```
 For more installation methods: [PySpike](http://mariomulansky.github.io/PySpike/)
+
+## Useful GitHub links
+
+* Basic reference to use GitHub commandline: [https://git-scm.com/docs](https://git-scm.com/docs)
+* Reference to resolve common conflicts with GitHub files: [http://allendowney.github.io/amgit/conflict.html](http://allendowney.github.io/amgit/conflict.html)
