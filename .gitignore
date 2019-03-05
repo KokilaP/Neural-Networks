@@ -1,3 +1,4 @@
 
 PySpike/
 lib/*.pyc
+.ipynb_checkpoints/*
