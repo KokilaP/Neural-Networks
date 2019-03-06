@@ -50,8 +50,8 @@ class BrianVisualization:
         
         # PoissonInput injection current -- changes each neuron's firing rate
         # Each neuron has different input current depending on Poisson distribution
-        # PI_num = 0.8*N 
-        # subG1 = G1[int(PI_num):] # Top 20% of total neurons stimulated
+        PI_num = 0.8*N 
+        #subG1 = G1[int(PI_num):] # Top 20% of total neurons stimulated
         subG1 = G1[:] # All neurons stimulated via Poisson 
         '''
         PoissonInput(target,target_var,N,rate,weight)
@@ -68,7 +68,7 @@ class BrianVisualization:
                
         return G1,S1,P1
 
-    def network_coupling(self,N,excit,inhib,p_couple,w_couple,G1,G2,sname,connect_type):
+    def network_coupling(self,N,p_couple,w_couple,G1,G2,sname,connect_type):
         '''
         Should see how coupling between different subpopulation has global effects (raster plot)
             - Could see difference if neurons have same firing rate (non-PoissonInput) vs. different firing rate (all-PoissonInput)
@@ -80,8 +80,8 @@ class BrianVisualization:
         S3 = Synapses(G1,G2, 'w: volt', on_pre='v_post += w',name=sname)#, delay=5*ms) # G1 drives G2
         
         ### Manually defining coupling ###
-        p_couple2 = p_couple*excit
-        i_couple2 = p_couple*inhib
+        p_couple2 = p_couple*N
+        i_couple2 = 0.8*N
         
         # If want 1:1 for only first p_couple% neurons (excitatory --> excitatory)
         if connect_type == 'ee':
