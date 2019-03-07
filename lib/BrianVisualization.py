@@ -115,9 +115,9 @@ class BrianVisualization:
                 coup_mat[ii][ii] = 1      # Matrix has 1s for connections and 0s for none
 
         #statemon1 = StateMonitor(G1, 'v', record=0,name='statemon1_'+ G1.name) # Records just neuron 0 to save resources
-        statemon1 = StateMonitor(G1, 'v', record=0)
+        statemon1 = StateMonitor(G1, 'v', record=0, name='statemon_cG1')
         spikemon1 = SpikeMonitor(G1, variables='v',name='spikemon_cG1')
-        statemon2 = StateMonitor(G2, 'v', record=0) # Records just neuron 0 to save resources
+        statemon2 = StateMonitor(G2, 'v', record=0, name='statemon_cG2') # Records just neuron 0 to save resources
         spikemon2 = SpikeMonitor(G2, variables='v',name='spikemon_cG2')
 
         return statemon1,spikemon1,statemon2,spikemon2,c_rows,c_cols,coup_mat,S3
