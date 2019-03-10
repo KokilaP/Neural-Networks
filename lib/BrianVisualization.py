@@ -43,6 +43,7 @@ class BrianVisualization:
                 
         G1 = NeuronGroup(N, eqs, threshold='v>v_th', reset='v=v_r', refractory=10*ms, method=integ_method,name=gname) #integ_method defined in input parameter block
         G1.v = v_c # initial voltage value defined in input block
+    
         '''
         Injection current is constant but with slight perturbations from PoissonInput, if that function is active
         To get rid of highly synchronized, G1.v='rand()' and turn on P1
@@ -55,14 +56,24 @@ class BrianVisualization:
         subG1 = G1[:] # All neurons stimulated via Poisson 
         '''
         PoissonInput(target,target_var,N,rate,weight)
-        target: which neurons to send PoissonInput
-        target_var: which variable that is being changed from input
-        N: number of inputs (more input = higher firing rate)
-        rate: rate of input (100Hz = 10ms per spike)
-        weight: amount added to voltage
+            target: which neurons to send PoissonInput
+            target_var: which variable that is being changed from input
+            N: number of inputs (more input = higher firing rate)
+            rate: rate of input (100Hz = 10ms per spike)
+            weight: amount added to voltage
         '''
         P1 = PoissonInput(subG1, 'v', 5, 100*Hz, weight=PInput) # PoissonInput off if PInput = 0
-        S1 = Synapses(G1, G1, 'w : volt', on_pre='v_post += w',name=sname) # w is the synapse weight added to the signal
+        
+        '''
+        Synapses(source,target,model,on_pre,name)
+            source: neuron group for pre-synaptic neurons
+            target: neuron group for post-synaptic neurons
+            model: synapse equations, in this case only a weight variable, w is used
+            on_pre: the pre-synaptic event. Weight, w is added to voltage from pre-synaptic neuron and this becomes the 
+                    post-synaptic neuron voltage
+            name: to uniquely identify the synapse group
+        '''
+        S1 = Synapses(G1, G1, 'w : volt', on_pre='v_post += w',name=sname)
         S1.connect(i=rows, j=cols) # Adjacency matrix from Adj.weighted, this uses network structure defined on networkx
         S1.w = connect_W/float(100) # Weighted matrix defined from networkx graph 
                
@@ -115,9 +126,9 @@ class BrianVisualization:
                 coup_mat[ii][ii] = 1      # Matrix has 1s for connections and 0s for none
 
         #statemon1 = StateMonitor(G1, 'v', record=0,name='statemon1_'+ G1.name) # Records just neuron 0 to save resources
-        statemon1 = StateMonitor(G1, 'v', record=0, name='statemon_cG1')
+        statemon1 = StateMonitor(G1, variables=['v','ge','gi'], record=0, name='statemon_cG1')
         spikemon1 = SpikeMonitor(G1, variables='v',name='spikemon_cG1')
-        statemon2 = StateMonitor(G2, 'v', record=0, name='statemon_cG2') # Records just neuron 0 to save resources
+        statemon2 = StateMonitor(G2, variables=['v','ge','gi'], record=0, name='statemon_cG2') # Records just neuron 0 to save resources
         spikemon2 = SpikeMonitor(G2, variables='v',name='spikemon_cG2')
 
         return statemon1,spikemon1,statemon2,spikemon2,c_rows,c_cols,coup_mat,S3
