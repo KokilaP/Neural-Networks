@@ -43,6 +43,7 @@ class BrianVisualization:
                 
         G1 = NeuronGroup(N, eqs, threshold='v>v_th', reset='v=v_r', refractory=10*ms, method=integ_method,name=gname) #integ_method defined in input parameter block
         G1.v = v_c # initial voltage value defined in input block
+        G1.ge = 1*psiemens
     
         '''
         Injection current is constant but with slight perturbations from PoissonInput, if that function is active
@@ -126,11 +127,12 @@ class BrianVisualization:
                 coup_mat[ii][ii] = 1      # Matrix has 1s for connections and 0s for none
 
         #statemon1 = StateMonitor(G1, 'v', record=0,name='statemon1_'+ G1.name) # Records just neuron 0 to save resources
-        statemon1 = StateMonitor(G1, variables=['v','ge','gi'], record=0, name='statemon_cG1')
+        statemon1 = StateMonitor(G1,variables=['v','ge','gi'],record=0, name='statemon_cG1')
         spikemon1 = SpikeMonitor(G1, variables='v',name='spikemon_cG1')
         statemon2 = StateMonitor(G2, variables=['v','ge','gi'], record=0, name='statemon_cG2') # Records just neuron 0 to save resources
         spikemon2 = SpikeMonitor(G2, variables='v',name='spikemon_cG2')
-
+        # statemon_syn = StateMonitor(S3, variables=['v','ge','gi'], record=0, name='statemon_syn') # Records synaptic index 0
+        
         return statemon1,spikemon1,statemon2,spikemon2,c_rows,c_cols,coup_mat,S3
         
     def spike_time(self,spikemon):
