@@ -70,7 +70,7 @@ class AdjacencyMatrix:
         for i in range(connect):
             x = new_rows[i]
             y = new_cols [i]
-            if x>(excit-1) or y>(excit-1):   # Checking if either source or target neuron belongs to upper 20% of n 
+            if x>(excit-1):   # If source neuron belongs to upper 20% of n, incoming signals from inhibitory neurons make inhib synapses 
                 A_mat[x,y] = A_mat[x,y]*-1   # Inhibitory neuron defined, weight is made negative
                                              # not necessary to repeat for symmetric part of the matrix as it won't be used
 
