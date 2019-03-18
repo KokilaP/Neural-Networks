@@ -32,7 +32,7 @@ class BrianVisualization:
         
         start_scope()
     
-    def network_indv(self,rows,cols,connect_W,N,PInput,gname,sname,neuron_diffeqns,integ_method,v_c):
+    def network_indv(self,rows,cols,connect_W,N,PInput,gname,sname,neuron_diffeqns,integ_method,v_c,g_EE,g_II):
         # rows and cols 1-D arrays of source and target neurons that are connected as defined in graph from networkx
         # connect_W: 1-D array of strength of connections corresponding to source and target neuron pairs 
         '''
@@ -43,7 +43,8 @@ class BrianVisualization:
                 
         G1 = NeuronGroup(N, eqs, threshold='v>v_th', reset='v=v_r', refractory=10*ms, method=integ_method,name=gname) #integ_method defined in input parameter block
         G1.v = v_c # initial voltage value defined in input block
-        # G1.ge = 1*psiemens
+        G1.ge = g_EE
+        G1.gi = g_II
     
         '''
         Injection current is constant but with slight perturbations from PoissonInput, if that function is active
@@ -74,7 +75,9 @@ class BrianVisualization:
                     post-synaptic neuron voltage
             name: to uniquely identify the synapse group
         '''
-        S1 = Synapses(G1, G1, 'w : volt', on_pre='v_post += w',name=sname)
+        S1 = Synapses(G1, G1, model ='''w : volt''', on_pre='''v_post += w
+                                                               ge+=we*(w>0*volt)
+                                                               gi+=wi*(w<0*volt)''',name=sname)
         S1.connect(i=rows, j=cols) # Adjacency matrix from Adj.weighted, this uses network structure defined on networkx
         S1.w = connect_W/float(100) # Weighted matrix defined from networkx graph 
                
@@ -89,7 +92,9 @@ class BrianVisualization:
             = Can introduce multiple output synapses (multisynaptic_index from http://brian2.readthedocs.io/en/2.0.1/user/synapses.html)
                 - Or more simply "S.connect(i=numpy.arange(10), j=1)"
         '''
-        S3 = Synapses(G1,G2, 'w: volt', on_pre='v_post += w',name=sname)#, delay=5*ms) # G1 drives G2
+        S3 = Synapses(G1,G2, model ='''w : volt''', on_pre='''v_post += w
+                                                              ge+=we*(w>0*volt)
+                                                              gi+=wi*(w<0*volt)''',name=sname)#, delay=5*ms) # G1 drives G2
         
         ### Manually defining coupling ###
         p_couple2 = p_couple*excit
@@ -127,9 +132,9 @@ class BrianVisualization:
                 coup_mat[ii][ii] = 1      # Matrix has 1s for connections and 0s for none
 
         #statemon1 = StateMonitor(G1, 'v', record=0,name='statemon1_'+ G1.name) # Records just neuron 0 to save resources
-        statemon1 = StateMonitor(G1,variables=('v','ge','gi'), record=0, name='statemon_cG1')
+        statemon1 = StateMonitor(G1,variables=('v','ge','gi'), record=0, dt=10*us,name='statemon_cG1')
         spikemon1 = SpikeMonitor(G1, variables='v',name='spikemon_cG1')
-        statemon2 = StateMonitor(G2, variables=('v','ge','gi'), record=0, name='statemon_cG2') # Records just neuron 0 to save resources
+        statemon2 = StateMonitor(G2, variables=('v','ge','gi'), record=0, dt=10*us,name='statemon_cG2') # Records neuron 0
         spikemon2 = SpikeMonitor(G2, variables='v',name='spikemon_cG2')
         # statemon_syn = StateMonitor(S3, variables=['v','ge','gi'], record=0, name='statemon_syn') # Records synaptic index 0
         

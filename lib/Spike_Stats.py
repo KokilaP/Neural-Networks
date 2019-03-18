@@ -153,12 +153,7 @@ class Spike_Stats:
     def batch_cc(self, SN1_2t, SN2_2t,phase1,phase2,bin_size):
         SN1_2_tbin = self.spikebin_total(SN1_2t, phase1, phase2,bin_size)
         SN2_2_tbin = self.spikebin_total(SN2_2t, phase1, phase2,bin_size)
-        # print('net 1 bin phase')
-        # print(SN1_2_tbin)
-        # print('net 2 bin phase')
-        # print(SN2_2_tbin)
         SN_2_tCC = self.spike_tcc(SN1_2_tbin, SN2_2_tbin)
-        # print(SN_2_tCC)
         return SN_2_tCC
 
     # older func. Made newer one to cut down on unnecessary data
